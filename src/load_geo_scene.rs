@@ -93,7 +93,10 @@ pub fn create_trianglemesh(geo_data: &GeoData) -> Vec<usize> {
     triangle_index_array
 }
 
-pub fn create_triangles(vertex_array: Vec<Point>, triangle_index_array: Vec<usize>) -> Vec<Element> {
+pub fn create_triangles(
+    vertex_array: Vec<Point>,
+    triangle_index_array: Vec<usize>,
+) -> Vec<Element> {
     let mut triangles: Vec<Element> = Vec::new();
     for i in 0..triangle_index_array.len() / 3 {
         let triangle: Triangle = Triangle {
@@ -144,8 +147,74 @@ mod test_file_read {
     use super::*;
 
     #[test]
-    fn read_file() {
-        let file_content = load_geo_file(String::from("geo_test.geo"));
-        assert!(true);
+    fn negativ_load_geo_file() {
+        let file_content = load_geo_file(String::from("file_that_does_not_exist.geo"));
+        match file_content {
+            Ok(c) => assert!(false),
+            Err(e) => assert!(true),
+        }
+    }
+
+    #[test]
+    fn positiv_create_triangles() {
+        let point1: Point = Point {
+            x: -1.0,
+            y: -1.0,
+            z: -5.0,
+        };
+        let point2: Point = Point {
+            x: -1.0,
+            y: 1.0,
+            z: -5.0,
+        };
+        let point3: Point = Point {
+            x: 1.0,
+            y: 1.0,
+            z: -5.0,
+        };
+        let point4: Point = Point {
+            x: 1.0,
+            y: -1.0,
+            z: -5.0,
+        };
+
+        let vertex_array: Vec<Point> = vec![
+            point1.clone(),
+            point2.clone(),
+            point3.clone(),
+            point4.clone(),
+        ];
+        let triangle_index_array: Vec<usize> = vec![0, 1, 2, 0, 2, 3];
+        let actual: Vec<Element> = create_triangles(vertex_array, triangle_index_array);
+
+        let expected: Vec<Triangle> = vec![
+            Triangle {
+                point1: point1.clone(),
+                point2: point2.clone(),
+                point3: point3.clone(),
+            },
+            Triangle {
+                point1: point1.clone(),
+                point2: point3.clone(),
+                point3: point4.clone(),
+            },
+        ];
+
+        for i in 0..actual.len() {
+            match &&actual[i] {
+                &Element::Triangle(t) => {
+                    assert!(t.point1.x == expected[i].point1.x);
+                    assert!(t.point1.y == expected[i].point1.y);
+                    assert!(t.point1.z == expected[i].point1.z);
+                    assert!(t.point2.x == expected[i].point2.x);
+                    assert!(t.point2.y == expected[i].point2.y);
+                    assert!(t.point2.z == expected[i].point2.z);
+                    assert!(t.point3.x == expected[i].point3.x);
+                    assert!(t.point3.y == expected[i].point3.y);
+                    assert!(t.point3.z == expected[i].point3.z);
+                }
+                _ => assert!(false),
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
-use std::ops::{Sub, Add};
 use crate::vector::Vector3;
+use std::ops::{Add, Sub};
 
 #[derive(Clone, Debug)]
 pub struct Point3 {
@@ -14,6 +14,14 @@ impl Point3 {
     }
     pub fn from_one(v: f64) -> Point3 {
         Point3 { x: v, y: v, z: v }
+    }   
+
+    pub fn to_vector(&self) -> Vector3 {
+        Vector3 {
+            x: self.x,
+            y: self.y,
+            z: self.z,
+        }
     }
 }
 

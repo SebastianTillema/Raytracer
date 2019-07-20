@@ -26,7 +26,7 @@ pub fn load_geo_file(file_path: String) -> std::io::Result<GeoData> {
     let string_index_array = content[1].parse::<String>().unwrap();
     let face_index_array: Vec<usize> = string_index_array
         .split(' ') // split string of numbers
-        .map(|s| s.parse().unwrap()) // pares strings to numbers
+        .map(|s| s.parse().unwrap()) // pares strings to numbers    TODO: Can crash?
         .collect(); // collect to a vector;
 
     // vertex index array

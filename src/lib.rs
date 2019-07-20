@@ -3,11 +3,13 @@ pub mod point;
 pub mod intersection;
 pub mod scene;
 pub mod vector;
+pub mod shading;
 
 use image::{DynamicImage, GenericImage, GenericImageView, ImageBuffer, Rgba};
 use load_geo_scene::create_scene_from_file;
 use point::Point3;
 use intersection::{get_color, Intersectable, Ray};
+use shading::facing_ratio;
 use scene::{Color, Element, Plane, Scene, Sphere, Triangle};
 use vector::Vector3;
 
@@ -20,13 +22,20 @@ pub fn render(scene: &Scene) -> DynamicImage {
             match intersection {
                 Some(element) => {
                     let color: &Color = get_color(element);
+                    let normal: Vector3;
+                    match element {
+                        Element::Triangle(t) => normal = t.calculate_normal(),
+                        _ => normal = Vector3::from_one(-1.0),
+                    }
+                    let ratio: f64 = facing_ratio(&ray, &normal);
+                    //print!("Ratio: {}\n", ratio);
                     image.put_pixel(
                         x,
                         y,
                         Rgba([
-                            color.red as u8,
-                            color.green as u8,
-                            color.blue as u8,
+                            (color.red * (1.0 - ratio)) as u8,
+                            (color.green * (1.0 - ratio)) as u8,
+                            (color.blue * (1.0 -ratio)) as u8,
                             255,
                         ]),
                     );

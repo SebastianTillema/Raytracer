@@ -1,6 +1,6 @@
 use crate::point::Point; // get access to point struct
 use crate::vector::Vector3;
-use crate::rendering::{Ray, Intersectable};
+use crate::intersection::{Ray, Intersectable};
 
 pub struct Color {
     pub red: f32,

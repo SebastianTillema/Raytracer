@@ -1,13 +1,13 @@
 pub mod load_geo_scene;
 pub mod point;
-pub mod rendering;
+pub mod intersection;
 pub mod scene;
 pub mod vector;
 
 use image::{DynamicImage, GenericImage, GenericImageView, ImageBuffer, Rgba};
 use load_geo_scene::create_scene_from_file;
 use point::Point;
-use rendering::{get_color, Intersectable, Ray};
+use intersection::{get_color, Intersectable, Ray};
 use scene::{Color, Element, Plane, Scene, Sphere, Triangle};
 use vector::Vector3;
 

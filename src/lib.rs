@@ -16,29 +16,15 @@ pub fn render(scene: &Scene) -> DynamicImage {
     for x in 0..scene.width {
         for y in 0..scene.height {
             let ray = Ray::create_prime(x, y, scene);
-            let mut nearest_element: Option<&Element> = None;
-            let mut dist_to_nearest_element: f64 = 10E6;
-            for e in &scene.elements {
-                let intersect = e.intersect(&ray);
-                // render only the nearest element
-                match intersect {
-                    Some(d) => {
-                        if d < dist_to_nearest_element {
-                            nearest_element = Some(e);
-                            dist_to_nearest_element = d;
-                        }
-                    }
-                    None => {}
-                }
-            }
-            match nearest_element {
-                Some(c) => {
-                    let color: Color = get_color(c);
+            let intersection: Option<&Element> = scene.trace(&ray);
+            match intersection {
+                Some(element) => {
+                    let color: &Color = get_color(element);
                     image.put_pixel(
                         x,
                         y,
                         Rgba([
-                            (dist_to_nearest_element * 100.0) as u8,
+                            color.red as u8,
                             color.green as u8,
                             color.blue as u8,
                             255,
@@ -84,6 +70,11 @@ mod integration_test {
                         y: 1.0,
                         z: -5.0,
                     },
+                    color: Color {
+                        red: 180.0,
+                        green: 20.0,
+                        blue: 20.0,
+                    },
                 }),
                 Element::Triangle(Triangle {
                     point1: Point {
@@ -100,6 +91,11 @@ mod integration_test {
                         x: -1.0,
                         y: 1.0,
                         z: -5.0,
+                    },
+                    color: Color {
+                        red: 20.0,
+                        green: 180.0,
+                        blue: 20.0,
                     },
                 }),
             ],

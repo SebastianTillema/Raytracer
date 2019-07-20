@@ -1,5 +1,5 @@
 use crate::point::Point;
-use crate::scene::{Element, Scene, Triangle};
+use crate::scene::{Element, Scene, Triangle, Color};
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -112,6 +112,11 @@ pub fn create_triangles(
                 .get(*triangle_index_array.get(3 * i + 2).unwrap())
                 .unwrap()
                 .clone(),
+            color: Color {
+                red: 180.0,
+                green: 180.0,
+                blue: 180.0,
+            },
         };
         triangles.push(Element::Triangle(triangle));
     }
@@ -192,11 +197,21 @@ mod test_file_read {
                 point1: point1.clone(),
                 point2: point2.clone(),
                 point3: point3.clone(),
+                color: Color {
+                    red: 180.0,
+                    green: 180.0,
+                    blue: 180.0,
+                },
             },
             Triangle {
                 point1: point1.clone(),
                 point2: point3.clone(),
                 point3: point4.clone(),
+                color: Color {
+                    red: 180.0,
+                    green: 180.0,
+                    blue: 180.0,
+                },
             },
         ];
 

@@ -155,8 +155,14 @@ impl Intersectable for Plane {
     }
 }
 
-pub fn get_color(element: &Element) -> Color {
-    Color {
+pub fn get_color(element: &Element) -> &Color {
+    match element {
+        Element::Triangle(t) => {
+            return &t.color;
+        },
+        _ => {print!("Not Triangle \n", )},
+    }
+    &Color {
         red: 65.0,
         green: 20.0,
         blue: 150.0,

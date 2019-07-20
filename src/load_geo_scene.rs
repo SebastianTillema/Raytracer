@@ -1,4 +1,4 @@
-use crate::point::Point;
+use crate::point::Point3;
 use crate::scene::{Element, Scene, Triangle, Color};
 use std::fs::File;
 use std::io::prelude::*;
@@ -7,8 +7,8 @@ pub struct GeoData {
     num_face: usize,
     face_index_array: Vec<usize>,
     vertex_index_array: Vec<usize>,
-    vertex_array: Vec<Point>,
-    normal_array: Vec<Point>,
+    vertex_array: Vec<Point3>,
+    normal_array: Vec<Point3>,
 }
 
 pub fn load_geo_file(file_path: String) -> std::io::Result<GeoData> {
@@ -43,9 +43,9 @@ pub fn load_geo_file(file_path: String) -> std::io::Result<GeoData> {
         .map(|s| s.parse().unwrap()) // pares strings to numbers
         .collect(); // collect to a vector;
 
-    let mut vertex_array: Vec<Point> = Vec::new();
+    let mut vertex_array: Vec<Point3> = Vec::new();
     for i in 0..(coordinate_array.len() / 3) {
-        vertex_array.push(Point {
+        vertex_array.push(Point3 {
             x: coordinate_array[3 * i],
             y: coordinate_array[3 * i + 1] - 8.0,  // todo
             z: coordinate_array[3 * i + 2] - 12.0, // todo: -10 test
@@ -58,10 +58,10 @@ pub fn load_geo_file(file_path: String) -> std::io::Result<GeoData> {
         .split(' ') // split string of numbers
         .map(|s| s.parse().unwrap()) // pares strings to numbers
         .collect(); // collect to a vector;
-    let mut normal_array: Vec<Point> = Vec::new();
+    let mut normal_array: Vec<Point3> = Vec::new();
 
     for i in 0..(coordinate_array2.len() / 3) {
-        normal_array.push(Point {
+        normal_array.push(Point3 {
             x: coordinate_array2[3 * i],
             y: coordinate_array2[3 * i + 1],
             z: coordinate_array2[3 * i + 2],
@@ -94,7 +94,7 @@ pub fn create_trianglemesh(geo_data: &GeoData) -> Vec<usize> {
 }
 
 pub fn create_triangles(
-    vertex_array: Vec<Point>,
+    vertex_array: Vec<Point3>,
     triangle_index_array: Vec<usize>,
 ) -> Vec<Element> {
     let mut triangles: Vec<Element> = Vec::new();
@@ -162,28 +162,28 @@ mod test_file_read {
 
     #[test]
     fn positiv_create_triangles() {
-        let point1: Point = Point {
+        let point1: Point3 = Point3 {
             x: -1.0,
             y: -1.0,
             z: -5.0,
         };
-        let point2: Point = Point {
+        let point2: Point3 = Point3 {
             x: -1.0,
             y: 1.0,
             z: -5.0,
         };
-        let point3: Point = Point {
+        let point3: Point3 = Point3 {
             x: 1.0,
             y: 1.0,
             z: -5.0,
         };
-        let point4: Point = Point {
+        let point4: Point3 = Point3 {
             x: 1.0,
             y: -1.0,
             z: -5.0,
         };
 
-        let vertex_array: Vec<Point> = vec![
+        let vertex_array: Vec<Point3> = vec![
             point1.clone(),
             point2.clone(),
             point3.clone(),

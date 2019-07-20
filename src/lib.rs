@@ -6,7 +6,7 @@ pub mod vector;
 
 use image::{DynamicImage, GenericImage, GenericImageView, ImageBuffer, Rgba};
 use load_geo_scene::create_scene_from_file;
-use point::Point;
+use point::Point3;
 use intersection::{get_color, Intersectable, Ray};
 use scene::{Color, Element, Plane, Scene, Sphere, Triangle};
 use vector::Vector3;
@@ -55,17 +55,17 @@ mod integration_test {
             fov: 90.0,
             elements: vec![
                 Element::Triangle(Triangle {
-                    point1: Point {
+                    point1: Point3 {
                         x: 1.0,
                         y: 0.0,
                         z: -5.0,
                     },
-                    point2: Point {
+                    point2: Point3 {
                         x: 4.0,
                         y: 0.0,
                         z: -5.0,
                     },
-                    point3: Point {
+                    point3: Point3 {
                         x: 0.0,
                         y: 1.0,
                         z: -5.0,
@@ -77,17 +77,17 @@ mod integration_test {
                     },
                 }),
                 Element::Triangle(Triangle {
-                    point1: Point {
+                    point1: Point3 {
                         x: -4.0,
                         y: 0.0,
                         z: -5.0,
                     },
-                    point2: Point {
+                    point2: Point3 {
                         x: -1.0,
                         y: 0.0,
                         z: -5.0,
                     },
-                    point3: Point {
+                    point3: Point3 {
                         x: -1.0,
                         y: 1.0,
                         z: -5.0,
@@ -123,7 +123,7 @@ mod integration_test {
             fov: 90.0,
             elements: vec![
                 Element::Sphere(Sphere {
-                    center: Point {
+                    center: Point3 {
                         x: -1.0,
                         y: 1.0,
                         z: -6.0,
@@ -136,7 +136,7 @@ mod integration_test {
                     },
                 }),
                 Element::Sphere(Sphere {
-                    center: Point {
+                    center: Point3 {
                         x: 1.0,
                         y: 1.0,
                         z: -5.0,
@@ -161,7 +161,7 @@ mod integration_test {
             height: 600,
             fov: 90.0,
             elements: vec![Element::Plane(Plane {
-                origin: Point {
+                origin: Point3 {
                     x: 0.0,
                     y: 0.0,
                     z: -5.0,

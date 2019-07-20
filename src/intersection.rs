@@ -1,9 +1,9 @@
-use crate::point::Point;
+use crate::point::Point3;
 use crate::scene::{Color, Element, Plane, Scene, Sphere, Triangle};
 use crate::vector::Vector3;
 
 pub struct Ray {
-    pub origin: Point,
+    pub origin: Point3,
     pub direction: Vector3,
 }
 
@@ -17,7 +17,7 @@ impl Ray {
         let sensor_y = (1.0 - ((y as f64 + 0.5) / scene.height as f64) * 2.0) * fov_adjustment;
 
         Ray {
-            origin: Point::zero(),
+            origin: Point3::zero(),
             direction: Vector3 {
                 x: sensor_x,
                 y: sensor_y,
@@ -105,7 +105,7 @@ impl Intersectable for Triangle {
         }
 
         // compute intersection point
-        let p: Point = &ray.origin + &(&ray.direction * t); //TODO:
+        let p: Point3 = &ray.origin + &(&ray.direction * t); //TODO:
 
         // inside-outside test
         let mut c: Vector3;
@@ -177,7 +177,7 @@ mod test_rendering {
     #[test]
     fn intersect_sphere_ray() {
         let sphere: Sphere = Sphere {
-            center: Point {
+            center: Point3 {
                 x: 1.0,
                 y: 1.0,
                 z: -5.0,
@@ -191,7 +191,7 @@ mod test_rendering {
         };
         // ray hits center of sphere
         let prime_ray: Ray = Ray {
-            origin: Point {
+            origin: Point3 {
                 x: 0.0,
                 y: 0.0,
                 z: 0.0,

@@ -1,4 +1,4 @@
-use crate::point::Point; // get access to point struct
+use crate::point::Point3; // get access to point struct
 use crate::vector::Vector3;
 use crate::intersection::{Ray, Intersectable};
 
@@ -9,20 +9,20 @@ pub struct Color {
 }
 
 pub struct Sphere {
-    pub center: Point,
+    pub center: Point3,
     pub radius: f64,
     pub color: Color,
 }
 
 pub struct Triangle {
-    pub point1: Point,
-    pub point2: Point,
-    pub point3: Point,
+    pub point1: Point3,
+    pub point2: Point3,
+    pub point3: Point3,
     pub color: Color,
 }
 
 pub struct Plane {
-    pub origin: Point, 
+    pub origin: Point3, 
     pub normal: Vector3,
 }
 

@@ -1,4 +1,5 @@
 use crate::point::Point3;
+use crate::vector::{Matrix3, Vector3};
 use crate::scene::{Element, Scene, Triangle, Color};
 use std::fs::File;
 use std::io::prelude::*;
@@ -24,21 +25,22 @@ pub fn load_geo_file(file_path: String) -> std::io::Result<GeoData> {
 
     // face index array
     let string_index_array = content[1].parse::<String>().unwrap();
-    let face_index_array: Vec<usize> = string_index_array
+    let face_index_array: Vec<usize> = string_index_array.trim()
         .split(' ') // split string of numbers
         .map(|s| s.parse().unwrap()) // pares strings to numbers    TODO: Can crash?
         .collect(); // collect to a vector;
+    
 
     // vertex index array
     let string_vertex_index = content[2].parse::<String>().unwrap();
-    let vertex_index_array: Vec<usize> = string_vertex_index
+    let vertex_index_array: Vec<usize> = string_vertex_index.trim()
         .split(' ') // split string of numbers
         .map(|s| s.parse().unwrap()) // pares strings to numbers
         .collect(); // collect to a vector;
 
     // vertices array (3 coordinates for each vertex index)
     let string_coordinate = content[3].parse::<String>().unwrap();
-    let coordinate_array: Vec<f64> = string_coordinate
+    let coordinate_array: Vec<f64> = string_coordinate.trim()
         .split(' ') // split string of numbers
         .map(|s| s.parse().unwrap()) // pares strings to numbers
         .collect(); // collect to a vector;
@@ -47,14 +49,14 @@ pub fn load_geo_file(file_path: String) -> std::io::Result<GeoData> {
     for i in 0..(coordinate_array.len() / 3) {
         vertex_array.push(Point3 {
             x: coordinate_array[3 * i],
-            y: coordinate_array[3 * i + 1] - 8.0,  // todo
+            y: coordinate_array[3 * i + 1] - 8.0,  // todo: used to center images
             z: coordinate_array[3 * i + 2] - 12.0, // todo: -10 test
         });
     }
 
     // normal array
     let string_normals = content[4].parse::<String>().unwrap();
-    let coordinate_array2: Vec<f64> = string_normals
+    let coordinate_array2: Vec<f64> = string_normals.trim()
         .split(' ') // split string of numbers
         .map(|s| s.parse().unwrap()) // pares strings to numbers
         .collect(); // collect to a vector;
@@ -74,6 +76,7 @@ pub fn load_geo_file(file_path: String) -> std::io::Result<GeoData> {
         vertex_array: vertex_array,
         normal_array: normal_array,
     };
+    print!("Done with file loadning \n", );
     Ok(res)
 }
 
@@ -230,6 +233,18 @@ mod test_file_read {
                 }
                 _ => assert!(false),
             }
+        }
+    }
+
+    #[test]
+    fn dummy() {
+        let string_index_array = " 4 4 4 4 4 4 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 ".trim();
+        let face_index_array: Vec<usize> = string_index_array
+        .split(' ') // split string of numbers
+        .map(|s| s.parse().unwrap()) // pares strings to numbers    TODO: Can crash?
+        .collect(); // collect to a vector;
+        for v in face_index_array {
+            print!("Value: {} \n: ", v)
         }
     }
 }

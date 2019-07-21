@@ -105,7 +105,7 @@ impl Intersectable for Triangle {
         }
 
         // compute intersection point
-        let p: Point3 = &ray.origin + &(&ray.direction * t); //TODO:
+        let p: Point3 = &ray.origin + &(&ray.direction * t); 
 
         // inside-outside test
         let mut c: Vector3;
@@ -133,7 +133,7 @@ impl Intersectable for Triangle {
         if c.dot(&normal) < 0.0 {
             return None; //Some(255.0);
         }
-        Some(10.0)
+        Some((ray.origin.to_vector() - p.to_vector()).norm())
     }
 }
 // math: https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection

@@ -4,7 +4,7 @@ use crate::vector::Vector3;
 use std::f64;
 
 pub fn facing_ratio(ray: &Ray, normal: &Vector3) -> f64 {
-    let ratio: f64 = (normal.normalize()).dot(&ray.direction.normalize());
+    let ratio: f64 = ((normal.normalize()).dot(&ray.direction.normalize())).abs();
     let res = ratio.max(0.0);
     res
 }

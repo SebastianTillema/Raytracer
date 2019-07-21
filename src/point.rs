@@ -1,5 +1,5 @@
 use crate::vector::Vector3;
-use std::ops::{Add, Sub};
+use std::ops::{Add, Sub, Mul};
 
 #[derive(Clone, Debug)]
 pub struct Point3 {

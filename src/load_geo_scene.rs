@@ -1,6 +1,7 @@
 use crate::point::Point3;
 use crate::vector::{Matrix3, Vector3};
 use crate::scene::{Element, Scene, Triangle, Color};
+use crate::transforming::{rotate_object, Axis};
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -44,15 +45,15 @@ pub fn load_geo_file(file_path: String) -> std::io::Result<GeoData> {
         .split(' ') // split string of numbers
         .map(|s| s.parse().unwrap()) // pares strings to numbers
         .collect(); // collect to a vector;
-
-    let mut vertex_array: Vec<Point3> = Vec::new();
+    let mut points: Vec<Point3> = Vec::new();
     for i in 0..(coordinate_array.len() / 3) {
-        vertex_array.push(Point3 {
+        points.push(Point3 {
             x: coordinate_array[3 * i],
-            y: coordinate_array[3 * i + 1] - 8.0,  // todo: used to center images
-            z: coordinate_array[3 * i + 2] - 12.0, // todo: -10 test
+            y: coordinate_array[3 * i + 1] - 2.0,  // todo: used to center images
+            z: coordinate_array[3 * i + 2] - 20.0, // todo: -10 test
         });
     }
+    let vertex_array: Vec<Point3> = points;//rotate_object(points, Axis::x_axis, 0.0);
 
     // normal array
     let string_normals = content[4].parse::<String>().unwrap();
@@ -143,7 +144,7 @@ pub fn create_scene_from_file() -> std::io::Result<Scene> {
     let triangles: Vec<Element> = create_triangles(geo_data.vertex_array, triangle_index_array);
     let res: Scene = Scene {
         width: 600,
-        height: 600,
+        height: 400,
         fov: 90.0,
         elements: triangles,
     };

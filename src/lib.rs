@@ -4,6 +4,7 @@ pub mod intersection;
 pub mod scene;
 pub mod vector;
 pub mod shading;
+pub mod transforming;
 
 use image::{DynamicImage, GenericImage, GenericImageView, ImageBuffer, Rgba};
 use load_geo_scene::create_scene_from_file;
@@ -43,7 +44,7 @@ pub fn render(scene: &Scene) -> DynamicImage {
                 None => {}
             }
         }
-        //print!("progress {}: out of {} \n", x, scene.width);
+        print!("progress {}: out of {} \n", x, scene.width);
     }
     image
 }
@@ -191,8 +192,6 @@ mod integration_test {
 
     #[test]
     fn poly() {
-        // Time data:
-        // 1: 17.503
         let scene = create_scene_from_file();
         let image: DynamicImage;
         match scene {

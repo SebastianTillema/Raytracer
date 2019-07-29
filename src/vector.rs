@@ -13,6 +13,7 @@ pub struct Matrix3 {
     pub vec3: Vector3,
 }
 
+
 impl Vector3 {
     pub fn zero() -> Vector3 {
         Vector3::from_one(0.0)

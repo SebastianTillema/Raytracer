@@ -1,4 +1,4 @@
-use crate::vector::Vector3;
+use crate::vector::{Vector3, Matrix3};
 use std::ops::{Add, Sub, Mul};
 
 #[derive(Clone, Debug)]
@@ -47,4 +47,52 @@ impl<'a, 'b> Add<&'a Vector3> for &'b Point3 {
             z: self.z + other.z,
         }
     }
+}
+
+impl Mul<&Matrix3> for Point3 {
+    type Output = Point3;
+
+    fn mul(self, other: &Matrix3) -> Point3 {
+        Point3 {
+            x: other.vec1.x * self.x + other.vec1.y * self.y + other.vec1.z * self.z, 
+            y: other.vec2.x * self.x + other.vec2.y * self.y + other.vec2.z * self.z, 
+            z: other.vec3.x * self.x + other.vec3.y * self.y + other.vec3.z * self.z, 
+        }
+    }
+}
+
+#[cfg(test)]
+mod test_point {
+    use super::*;
+    #[test]
+    fn point_mul_matrix() {
+        let point: Point3 = Point3 {
+            x: 7.0,
+            y: 17.0,
+            z: 67.0,
+        };
+        let vec1: Vector3 = Vector3 {
+            x: 7.0,
+            y: 17.0,
+            z: 67.0,
+        };
+        let vec2: Vector3 = Vector3 {
+            x: 7.0,
+            y: 17.0,
+            z: 67.0,
+        };
+        let vec3: Vector3 = Vector3 {
+            x: 7.0,
+            y: 17.0,
+            z: 67.0,
+        };
+        let matrix: Matrix3 = Matrix3 {
+            vec1: vec1,
+            vec2: vec2,
+            vec3: vec3,
+        };
+        let res: Point3 = point * &matrix;
+        print!("{:?}", res);
+    }
+    
 }

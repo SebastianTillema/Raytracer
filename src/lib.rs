@@ -189,17 +189,6 @@ mod integration_test {
         let image = render(&scene);
         save_image(&image)
     }
-
-    #[test]
-    fn poly() {
-        let scene = create_scene_from_file();
-        let image: DynamicImage;
-        match scene {
-            Ok(s) => image = render(&s),
-            Err(e) => return,
-        }
-        save_image(&image);
-    }
         
     #[test]
     fn test_can_render_sphere_scene() {

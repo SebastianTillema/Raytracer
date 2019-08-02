@@ -128,14 +128,14 @@ pub fn create_triangles(
 }
 
 /** Blob */
-pub fn create_scene_from_file() -> std::io::Result<Scene> {
+pub fn create_scene_from_file(path: String) -> std::io::Result<Scene> {
     // load file
-    let file_content = load_geo_file(String::from("geo_test.geo"));
+    let file_content = load_geo_file(path);
     let geo_data: GeoData;
     match file_content {
         Ok(data) => geo_data = data,
         Err(e) => {
-            println!("error parsing file: {:?}", e);
+            println!(" \n error parsing file: {:?} \n", e);
             return Err(e);
         }
     }

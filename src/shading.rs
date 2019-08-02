@@ -12,7 +12,7 @@ pub fn facing_ratio(ray: &Ray, normal: &Vector3) -> f64 {
 #[cfg(test)]
 mod test_shading {
     use super::*;
-    
+
     #[test]
     fn dummy() {
         let ray = Ray {
